@@ -15,39 +15,38 @@ func random(between min: UInt32, and max: UInt32) -> Int {
     return Int(arc4random_uniform(max - min + 1) + min)
 }
 
-// ----------- Start of main part of program -----------
+var deck : [Int] = []
+var sortedDeck : [Int] = []
 
-// Ask the user if they are ready to begin
-print("Press any key to generate the unsorted list.", terminator: "")
-
-// Wait for a key to be pressed
-let input = readLine()
-
-// Make an empty array / list
-var numbers : [Int] = []
-
-// Populate the array
-for _ in 1...10 {
-    numbers.append( random(between: 1, and: 50) )
+for _ in 1...13
+{
+    deck.append( random(between: 1, and: 50))
 }
 
-// Show the user the contents of the array
-print("-----")
-print("The contents of the unsorted list:")
-for i in 0...numbers.count - 1 {
-    print("Index \(i), value: \(numbers[i])")
+
+// set lowest value to highest expected value, then find lowest
+var lowest = 50
+var lowestIndex = deck.count
+var i = 0
+while deck.count > 0
+{
+    lowest = 50
+    lowestIndex = deck.count
+    i = 0
+    //find the lowest number in the unsorted list
+    while i < deck.count
+    {
+        if lowest > deck[i]
+        {
+            lowest = deck[i]
+            lowestIndex = i
+        }
+        i += 1
+    }
+    
+    // add the lowest value to the sorted list, then remove that value from the unsorted list
+    sortedDeck.append(lowest)
+    deck.remove(at: lowestIndex)
 }
-print("-----")
 
-// ----------- Write code to sort the array here -----------
-print("Now sorting the array...")
-
-// ----------- Final part of the program, show the sorted list -----------
-print("-----")
-print("The contents of the sorted list:")
-for i in 0...numbers.count - 1 {
-    print("Index \(i), value: \(numbers[i])")
-}
-print("-----")
-
-
+print("The sorted deck is \(sortedDeck)")
